@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}eBookShop - Home{% endblock %}
+{% block content %}
+
+<section class="hero">
+    <h1>Find Your Next Great Read</h1>
+    <p>Browse our curated collection of books across genres.</p>
+</section>
+
+<section class="filters">
+    <form method="GET" action="{{ url_for('home') }}" class="filter-form">
+        <input type="text" name="search" placeholder="Search by title or author..." value="{{ search }}">
+        <select name="genre">
+            <option value="">All Genres</option>
+            {% for g in genres %}
+                <option value="{{ g['genre'] }}" {% if g['genre'] == selected_genre %}selected{% endif %}>{{ g['genre'] }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Search</button>
+    </form>
+</section>
+
+<section class="book-grid">
+    {% for book in books %}
+    <div class="book-card">
+        <a href="{{ url_for('book_detail', book_id=book['id']) }}">
+            <img src="{{ book['image_url'] }}" alt="{{ book['title'] }}" onerror="this.src='https://via.placeholder.com/200x280?text=No+Cover'">
+            <h3>{{ book['title'] }}</h3>
+        </a>
+        <p class="author">by {{ book['author'] }}</p>
+        <p class="genre-tag">{{ book['genre'] }}</p>
+        <p class="price">₹{{ '%.2f'|format(book['price']) }}</p>
+        <a href="{{ url_for('book_detail', book_id=book['id']) }}" class="btn">View Details</a>
+    </div>
+    {% else %}
+    <p>No books found matching your search.</p>
+    {% endfor %}
+</section>
+
+{% endblock %}

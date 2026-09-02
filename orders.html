@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}My Orders - eBookShop{% endblock %}
+{% block content %}
+
+<h2>My Orders</h2>
+
+{% if order_list %}
+    {% for entry in order_list %}
+    <div class="order-card">
+        <div class="order-header">
+            <span>Order #{{ entry.order['id'] }}</span>
+            <span>{{ entry.order['order_date'] }}</span>
+            <span class="status">{{ entry.order['status'] }}</span>
+        </div>
+        <ul>
+            {% for item in entry.order_items %}
+            <li>{{ item['title'] }} × {{ item['quantity'] }} — ₹{{ '%.2f'|format(item['price'] * item['quantity']) }}</li>
+            {% endfor %}
+        </ul>
+        <p class="order-total">Total: ₹{{ '%.2f'|format(entry.order['total_amount']) }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>You haven't placed any orders yet. <a href="{{ url_for('home') }}">Start shopping</a></p>
+{% endif %}
+
+{% endblock %}

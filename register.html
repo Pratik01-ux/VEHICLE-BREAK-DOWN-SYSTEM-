@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Register - eBookShop{% endblock %}
+{% block content %}
+
+<section class="auth-form">
+    <h2>Create an Account</h2>
+    <form method="POST">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required minlength="6">
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+</section>
+
+{% endblock %}
